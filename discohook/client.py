@@ -429,6 +429,20 @@ class Client(Starlette):
         if not data.get("id"):
             return
         return Channel(self, data)
+    
+    async def fetch_message(self, channel_id: str, message_id: str) -> Optional[Message]:
+        """
+        Fetches a message.
+
+        Returns
+        -------
+        Message
+        """
+        resp = await self.http.fetch_channel_message(channel_id, message_id)
+        data = await resp.json()
+        if not data.get("id"):
+            return
+        return Message(self, data)
 
     async def fetch_commands(self):
         """
