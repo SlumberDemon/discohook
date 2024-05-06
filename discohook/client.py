@@ -453,7 +453,7 @@ class Client(Starlette):
         List[Message]
         """
 
-        resp = await self.http.fetch_channel_messages(channel_id)
+        resp = await self.http.fetch_channel_messages(channel_id, params={"limit": 50})
         data = await resp.json()
         if not data.get("id"):
             return
