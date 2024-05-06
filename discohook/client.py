@@ -444,7 +444,7 @@ class Client(Starlette):
             return
         return Message(self, data)
     
-    async def fetch_messages(self, channel_id: str) -> Optional[list[Message]]:
+    async def fetch_messages(self, channel_id: str, limit: int) -> Optional[list[Message]]:
         """
         Fetches messages from channel of given id.
 
@@ -453,7 +453,7 @@ class Client(Starlette):
         List[Message]
         """
 
-        resp = await self.http.fetch_channel_messages(channel_id, params={"limit": 50})
+        resp = await self.http.fetch_channel_messages(channel_id, params={"limit": limit})
         data = await resp.json()
         return data
 
