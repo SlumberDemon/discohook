@@ -443,6 +443,21 @@ class Client(Starlette):
         if not data.get("id"):
             return
         return Message(self, data)
+    
+    async def fetch_messages(self, channel_id: str) -> Optional[list[Message]]:
+        """
+        Fetches messages from channel of given id.
+
+        Returns
+        -------
+        List[Message]
+        """
+
+        resp = await self.http.fetch_channel_messages(channel_id)
+        data = await resp.json()
+        if not data.get("id"):
+            return
+        return data
 
     async def fetch_commands(self):
         """
